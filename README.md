@@ -14,4 +14,5 @@ nuxt:2.15.7
 
 
 # 環境構築
+Python3がホストにないとnpmエラーが出ることがあります
 docker-compose up
