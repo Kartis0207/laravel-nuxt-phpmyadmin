@@ -9,21 +9,6 @@ services:
       - '8000:8000'
     env_file:
       - ./.env
-  mysql:
-    image: mysql/mysql-server:5.7
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    ports:
-      - '3306:3306'
-    environment:
-      TZ: Asia/Tokyo
-      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_USERNAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
-    volumes:
-      - /var/lib/mysql
-    env_file:
-      - ./.env
   frontend:
     build: ./frontend
     environment:
@@ -49,7 +34,28 @@ services:
       - backend
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-  # redis:
-  #   image: redis:latest
-  #   ports:
-  #     - 6379:6379
+  mysql:
+    image: mysql:8.0.27
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - db-data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - mysql
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=mysql
+    ports:
+      - "3001:80"
+volumes:
+  db-data
