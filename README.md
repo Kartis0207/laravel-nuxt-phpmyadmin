@@ -16,3 +16,13 @@ nuxt:2.15.7
 # 環境構築
 Python3がホストにないとnpmエラーが出ることがあります \
 docker-compose up
+
+### 動作確認
+#### laravel
+http://localhost:8000/
+
+#### nuxt
+http://localhost:3000/
+
+#### phpmyadmin
+http://localhost:3001/
