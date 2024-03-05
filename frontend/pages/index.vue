@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data () {
     return {
@@ -26,11 +25,9 @@ export default {
   },
   methods: {
     getMsg () {
-      const baseURL = 'http://localhost:8000'
       
-      // this.$axios.$get('/hello/index')
-      axios.get(`${baseURL}/hello/index`)
-        .then(res => this.msgs.push(res.data))
+      this.$axios.$get('/hello/index')
+        .then(res => this.msgs.push(res))
     }
   }
 }
